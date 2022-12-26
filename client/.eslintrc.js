@@ -37,5 +37,14 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'jsx-quotes': ['error', 'prefer-single'],
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        jsxSingleQuote: true,
+        parser: 'flow',
+      },
+    ],
   },
 };
