@@ -37,6 +37,7 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 0,
     'jsx-quotes': ['error', 'prefer-single'],
     'prettier/prettier': [
       'error',
