@@ -10,6 +10,8 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
+import { googleUserData } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 import useStyles from './styles';
 import Input from './Input/Input';
@@ -17,7 +19,8 @@ import Icon from './Icon';
 
 const Auth = () => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const handleSubmit = () => {};
@@ -29,11 +32,12 @@ const Auth = () => {
   };
   const login = useGoogleLogin({
     onSuccess: async (res) => {
-      const result = res?.profileObj;
-      const token = res?.tokenId;
-      console.log(res);
       try {
-        // dispatch({ type: 'AUTH', data: { result, token } });
+        const token = res.access_token;
+        const data = await googleUserData(token);
+        const result = data.data;
+        dispatch({ type: 'AUTH', data: { result, token } });
+        navigate('/');
       } catch (error) {
         console.log(error);
       }
