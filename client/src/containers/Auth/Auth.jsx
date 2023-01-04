@@ -12,10 +12,19 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 import { googleUserData } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import { signin, signup } from '../../store/actions/auth';
 
 import useStyles from './styles';
 import Input from './Input/Input';
 import Icon from './Icon';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 const Auth = () => {
   const classes = useStyles();
@@ -23,8 +32,19 @@ const Auth = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const [formData, setFormData] = useState(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      dispatch(signup(formData, navigate));
+    } else {
+      dispatch(signin(formData, navigate));
+    }
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleShowPassword = () => setShowPassword((prevState) => !prevState);
   const switchMode = () => {
     setIsSignUp((prevState) => !prevState);
@@ -85,7 +105,7 @@ const Auth = () => {
             />
             {isSignUp && (
               <Input
-                name='ConfirmPassword'
+                name='confirmPassword'
                 label='Repeat Password'
                 handleChange={handleChange}
                 type='password'

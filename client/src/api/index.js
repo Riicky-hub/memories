@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/posts';
+const API = axios.create({ baseURL: 'http://localhost:5000' });
+const postsRoute = '/posts';
+const usersRoute = '/user';
 
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
+export const fetchPosts = () => API.get(postsRoute);
+export const createPost = (newPost) => API.post(postsRoute, newPost);
 export const updatePost = (id, updatedPost) =>
-  axios.patch(`${url}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
-export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
+  API.patch(`${postsRoute}/${id}`, updatedPost);
+export const deletePost = (id) => API.delete(`${postsRoute}/${id}`);
+export const likePost = (id) => API.patch(`${postsRoute}/${id}/likePost`);
 
 export const googleUserData = (token) =>
   axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
@@ -15,3 +17,6 @@ export const googleUserData = (token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const signIn = (formData) => API.post(`${usersRoute}/signin`, formData);
+export const signUp = (formData) => API.post(`${usersRoute}/signup`, formData);
