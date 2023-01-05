@@ -4,6 +4,7 @@ import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
+import decode from 'jwt-decode';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -13,11 +14,15 @@ const Navbar = () => {
   const location = useLocation();
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
-    navigate('/');
     setUser(null);
+    navigate('/auth');
   };
   useEffect(() => {
-    // const token = user?.token;
+    const token = user?.token;
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location]);
   return (

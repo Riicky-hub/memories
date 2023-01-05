@@ -10,7 +10,7 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
-import { googleUserData } from '../../api';
+import googleUserData from '../../api/googleAPI';
 import { useNavigate } from 'react-router-dom';
 import { signin, signup } from '../../store/actions/auth';
 
@@ -53,9 +53,9 @@ const Auth = () => {
   const login = useGoogleLogin({
     onSuccess: async (res) => {
       try {
-        const token = res.access_token;
-        const data = await googleUserData(token);
+        const data = await googleUserData(res.access_token);
         const result = data.data;
+        const token = data.data.sub;
         dispatch({ type: 'AUTH', data: { result, token } });
         navigate('/');
       } catch (error) {

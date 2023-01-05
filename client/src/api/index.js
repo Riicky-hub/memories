@@ -1,6 +1,14 @@
+/* eslint-disable prettier/prettier */
 import axios from 'axios';
 
 const API = axios.create({ baseURL: 'http://localhost:5000' });
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem('profile')) {
+    req.headers.authorization = `Bearer ${ JSON.parse(localStorage.getItem('profile')).token }`;
+  }
+  return req;
+});
+
 const postsRoute = '/posts';
 const usersRoute = '/user';
 
@@ -10,13 +18,6 @@ export const updatePost = (id, updatedPost) =>
   API.patch(`${postsRoute}/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`${postsRoute}/${id}`);
 export const likePost = (id) => API.patch(`${postsRoute}/${id}/likePost`);
-
-export const googleUserData = (token) =>
-  axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
 
 export const signIn = (formData) => API.post(`${usersRoute}/signin`, formData);
 export const signUp = (formData) => API.post(`${usersRoute}/signup`, formData);
