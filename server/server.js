@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 const CONNECTION_STRING = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mainserver.8crzy.mongodb.net/${process.env.DB_CLUSTER}?retryWrites=true&w=majority`;
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 5000;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(CONNECTION_STRING, { useNewUrlParser: true })
