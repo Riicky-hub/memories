@@ -21,7 +21,7 @@
 
 
 
-## Funcionalidades
+## Funcionalidades ⚙️
 
 - Multiplataforma
 - Autenticação de usuários
@@ -30,14 +30,14 @@
 - Google AuthO2
 - Armazenento de post e imagens no BD
 
-## Referência
+## Referência 🔖
 
 #### *- Tento fazer sempre meus projetos, respeitando a propriedade intelectual de seus devidos criadores*
 
 ### Estudo feito atráves desse vídeo(Youtube):  
 - [JavaScript Mastery](https://www.youtube.com/watch?v=VsUzmlZfYNg&t=7226s&ab_channel=JavaScriptMastery)
 
-## Feedback
+## Feedback 📖
 
 Se você tiver algum feedback, por favor nos deixe saber por meio de richardjosephace1960@gmail.com
 
